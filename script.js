@@ -194,6 +194,7 @@ const init = async () => {
      const minItem=document.querySelector('.basket-min');
      minItem.addEventListener('click', MinItem);
      function MinItem(){
+         // some comment
         // korzinaGoods.shift();
     //     console.log(korzinaGoods);
          korzinabtn.style.display='flex';
