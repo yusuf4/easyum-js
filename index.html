@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap" rel="stylesheet">
+
+</head>
+<body>
+<header>
+    <div class="nav-bar">
+        <div class="logo">
+            <p>logos</p>
+        </div>
+        <div class="input-search">
+            <img src="./icons/Location.svg" alt="" class="location">
+            <input type="search" class="search" placeholder="Введите адрес доставки">
+            <img class="search-icon" src="./icons/Search.png" alt="" width="24px" height="24px">
+        </div>
+        <div class="contact">
+            <div class="phone-icons">
+                <img class="phone-icon" src="./icons/Ellipse.png" alt="">
+                <img class="contact-phon" src="./icons/Calling.png" alt="">
+            </div>
+            <div class="contact-data">
+                <img src="icons/Контакты_%20+7%20(917)%20510-57-59.png">
+            </div>
+        </div>
+        <div class="korzina">
+            <div class="korzina-block">
+                <p>
+                    <span class="korzina-text">
+                        Корзина
+                    </span>
+                </p>
+                <hr class="korizna-line">
+                <img class="korzina-number" src="./icons/Ellipse%2050.png" alt="">
+                <p>
+                    <span class="korzina-text-number">
+                        0
+                    </span>
+                </p>
+            </div>
+        </div>
+
+    </div>
+    <div class="mask">
+        <div class="goods-item-korzina">
+
+        </div>
+        <img class="mask-main" src="./images/Mask%20Group.png" alt="">
+        <img class="mask-text" src="./images/Доставка%20ВКУСНЕЙШИХ%20БЛЮд%20за%2060%20минут.png" alt="">
+        <img class="mask-text-two" src="./images/Ещё%20не%20пробовал_.png" alt="">
+    </div>
+</header>
+
+
+<main>
+    <div class="main-menu">
+        <div class="menu-list">
+            <ul class="menu-list-items">
+                <li>
+                    <a class="menu-list-item active" href="#cold">Холодные закуски</a>
+                </li>
+                <li>
+                    <a class="menu-list-item" href="#hot"> Горячие закуски</a>
+                </li>
+                <li>
+                    <a class="menu-list-item" href="#">Мясные блюда</a>
+                </li>
+                <li>
+                    <a class="menu-list-item" href="#">Супы</a>
+                </li>
+                <li>
+                    <a class="menu-list-item" href="#">Рыбные блюда</a>
+                </li>
+            </ul>
+        </div>
+        <hr class="menu-line">
+        <div class="menu-category">
+            <div class="menu-cold" id="cold">
+                <hr class="menu-category-line-cold">
+                <p>
+                    <span class="menu-category-cold">
+                        Холодные закуски
+                    </span>
+                </p>
+                <div class="goods-list-cold"></div>
+            </div>
+            <div class="menu-hot" id="hot">
+                <div class="menu-hot-title">
+                    <img class="menu-category-line-hot" src="./icons/line-hot.png" alt="">
+                    <p>
+                        <span class="menu-category-hot">
+                            Горячие закуски
+                        </span>
+                    </p>
+                </div>
+                <div class="goods-list-hot"></div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</main>
+<footer></footer>
+<script src="script.js"></script>
+</body>
+</html>
