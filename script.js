@@ -133,11 +133,13 @@ const init = async () => {
         let button = basketplus[k];
         button.addEventListener('click', AddCardClick)
     }
+
     // get all id of goods from HTML window
     const idsitem = document.querySelectorAll('.articul')
 
     let totalQuantity = 0;
     let korzinaGoods = [];
+    let removeitems = []
     function AddCardClick(event){
         let button = event.target;
         let goodItem = button.parentElement.parentElement
@@ -145,7 +147,6 @@ const init = async () => {
         let title = goodItem.getElementsByClassName('goods-item-title')[0].innerText;
         let price = goodItem.getElementsByClassName('goods-item-price')[0].innerText;
         let IdProduct = goodItem.getElementsByClassName('articul')[0].innerText;
-        let ItemQuantity = goodItem.getElementsByClassName('quantityText')[0].innerText;
         let imageProduct = goodItem.querySelector('.img-product').getAttribute('src');
         //console.log(ItemQuantity);
 
@@ -169,7 +170,7 @@ const init = async () => {
                 counts[num]=1;
             }
         }
-        console.log(counts)
+        //console.log(counts)
         // add good quantity to an array
         for (let j=0; j<korzinaGoods.length; j++){
             let num=korzinaGoods[j]['id'];
@@ -195,6 +196,9 @@ const init = async () => {
             }
             currentId= korzinaGoods[i]['id'];
         }
+        //korzinaGoods=korzinaitems
+
+        // show goods quantity in each cards
         for (let i=0; i<korzinaitems.length; i++){
             let idarr = korzinaitems[i]['id'];
             for (let j=0; j<idsitem.length;j++) {
@@ -208,11 +212,10 @@ const init = async () => {
             }
         }
 
-
-        console.log(korzinaitems)
-        // for (let i=0; i<korzinaitems.length; i++){
-        //     if (korzinaitems[i]['id']==)
-        // }
+        //console.log(korzinaitems)
+         //removeitems=[...korzinaitems]
+        removeitems=korzinaitems
+        console.log(removeitems)
         // show number goods in korzina button
         totalQuantity++;
         AddNumberGoods.innerText=totalQuantity;
@@ -221,20 +224,60 @@ const init = async () => {
         //document.querySelector('.basket-items').innerHTML=korzinaitems.map(e=>`<div class="korzina-item" <p>${e.name}</p><p>${e.pprice}</p><p>${e.count}шт</p></div>`).join('');
     }
 
+    
+    // add onclick to minus icon of basket
+    let basketminus = document.querySelectorAll('.basket-min')
+    for (let k=0; k<basketminus.length; k++){
+        let button = basketminus[k];
+        button.addEventListener('click', RemoveItem);
+    }
 
+    function RemoveItem(event){
+        let buttons = event.target
+        let goodItem = buttons.parentElement.parentElement
+        let IDitem = goodItem.getElementsByClassName('articul')[0].innerHTML
+        //console.log(rquant)
 
+        // sort element of array based by id
+        korzinaGoods.sort((a, b) => a.id - b.id);
 
+        // remove duplicate element from korzinaGoods array and assign result to a new array
+        let korzinaitems = [];
+        let currentId = 0;
 
-     //console.log(idsitem)
+        for (let i=0; i<korzinaGoods.length; i++){
+            if (currentId!=korzinaGoods[i]['id']){
+                korzinaitems.unshift(korzinaGoods[i]);
+                //console.log(korzinaGoods[i]);
+                //document.querySelector('.quantityText').innerHTML=korzinaitems[i]['count'];
+            }
+            currentId= korzinaGoods[i]['id'];
+        }
 
-     const minItem=document.querySelector('.basket-min');
+        for (let i=0; i<korzinaitems.length; i++){
+            idarr = korzinaitems[i]['id'];
+            if (IDitem==idarr){
+                goodItem.getElementsByClassName('quantityText')[0].innerHTML=korzinaitems[i]['count']-=1
+                totalQuantity-=1;
+                if (totalQuantity>0){
+                    AddNumberGoods.innerText=totalQuantity;
+                }else if(totalQuantity==0){
+                    AddNumberGoods.innerText=0;
+                }
 
-     minItem.addEventListener('click', MinItem);
-     function MinItem(){
-         korzinabtn.style.display='flex';
-         document.querySelector('.korzina-item-number').style.display='none';
-         document.querySelector('.goods-quantity').style.display='none';
-     }
+                document.querySelector('.goods-item-korzina').innerHTML=korzinaitems.map(e=>`<div class="korzina-item" <p>${e.name}</p><p>${e.pprice}</p><p>${e.count}шт</p></div>`).join('');
+                if (removeitems[i]['count']==0){
+                    goodItem.getElementsByClassName('korzina-item-number')[0] .style.display='none'
+                    goodItem.getElementsByClassName('goods-quantity')[0].style.display='none'
+                    goodItem.getElementsByClassName('goods-buy')[0].style.display='flex';
+
+                    console.log("hide button")
+                }
+            }
+        }
+        korzinaGoods=korzinaitems
+        console.log(korzinaitems)
+    }
 
      // show and hide korzina goods
      let ShowBlock = document.querySelector('.goods-item-korzina');
