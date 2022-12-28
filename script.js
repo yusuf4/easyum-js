@@ -139,7 +139,7 @@ const init = async () => {
 
     let totalQuantity = 0;
     let korzinaGoods = [];
-    let removeitems = []
+
     function AddCardClick(event){
         let button = event.target;
         let goodItem = button.parentElement.parentElement
@@ -163,14 +163,17 @@ const init = async () => {
         // count goods quantity and save it in object counts
         let counts= {};
         for (let i=0; i<korzinaGoods.length; i++){
-            let num = korzinaGoods[i]['id'];
-            if (counts[num]){
-                counts[num]+=1;
+            let itemId = korzinaGoods[i]['id'];
+            let itemCount=  korzinaGoods[i]['count'];
+            let itemvalue = 0;
+            if (counts[itemId]){
+               // counts[itemId]+=1;
+                counts[itemId]=itemvalue++;
             }else{
-                counts[num]=1;
+                counts[itemId]=itemCount;
             }
         }
-        //console.log(counts)
+        console.log(counts)
         // add good quantity to an array
         for (let j=0; j<korzinaGoods.length; j++){
             let num=korzinaGoods[j]['id'];
@@ -213,15 +216,12 @@ const init = async () => {
         }
 
         //console.log(korzinaitems)
-         //removeitems=[...korzinaitems]
-        removeitems=korzinaitems
-        console.log(removeitems)
+
         // show number goods in korzina button
         totalQuantity++;
         AddNumberGoods.innerText=totalQuantity;
         // render elements of korzinaitems array to HTML
         document.querySelector('.goods-item-korzina').innerHTML=korzinaitems.map(e=>`<div class="korzina-item" <p>${e.name}</p><p>${e.pprice}</p><p>${e.count}шт</p></div>`).join('');
-        //document.querySelector('.basket-items').innerHTML=korzinaitems.map(e=>`<div class="korzina-item" <p>${e.name}</p><p>${e.pprice}</p><p>${e.count}шт</p></div>`).join('');
     }
 
     
@@ -242,41 +242,48 @@ const init = async () => {
         korzinaGoods.sort((a, b) => a.id - b.id);
 
         // remove duplicate element from korzinaGoods array and assign result to a new array
-        let korzinaitems = [];
+        let basketitems = [];
         let currentId = 0;
 
         for (let i=0; i<korzinaGoods.length; i++){
             if (currentId!=korzinaGoods[i]['id']){
-                korzinaitems.unshift(korzinaGoods[i]);
+                basketitems.unshift(korzinaGoods[i]);
                 //console.log(korzinaGoods[i]);
                 //document.querySelector('.quantityText').innerHTML=korzinaitems[i]['count'];
             }
             currentId= korzinaGoods[i]['id'];
         }
 
-        for (let i=0; i<korzinaitems.length; i++){
-            idarr = korzinaitems[i]['id'];
+        for (let i=0; i<basketitems.length; i++){
+            let idarr = basketitems[i]['id'];
+            let itemcount = basketitems[i]['count'];
             if (IDitem==idarr){
-                goodItem.getElementsByClassName('quantityText')[0].innerHTML=korzinaitems[i]['count']-=1
+                goodItem.getElementsByClassName('quantityText')[0].innerHTML=basketitems[i]['count']-=1
                 totalQuantity-=1;
                 if (totalQuantity>0){
                     AddNumberGoods.innerText=totalQuantity;
-                }else if(totalQuantity==0){
+                }else{
                     AddNumberGoods.innerText=0;
                 }
+                // if (itemcount==0){
+                //     basketitems.splice(i,1)
+                // }
 
-                document.querySelector('.goods-item-korzina').innerHTML=korzinaitems.map(e=>`<div class="korzina-item" <p>${e.name}</p><p>${e.pprice}</p><p>${e.count}шт</p></div>`).join('');
-                if (removeitems[i]['count']==0){
+                if (basketitems[i]['count']==0){
+                    basketitems.splice(i,1)
                     goodItem.getElementsByClassName('korzina-item-number')[0] .style.display='none'
                     goodItem.getElementsByClassName('goods-quantity')[0].style.display='none'
                     goodItem.getElementsByClassName('goods-buy')[0].style.display='flex';
 
-                    console.log("hide button")
+                    //console.log("hide button")
                 }
+                document.querySelector('.goods-item-korzina').innerHTML=basketitems.map(e=>`<div class="korzina-item" <p>${e.name}</p><p>${e.pprice}</p><p>${e.count}шт</p></div>`).join('');
+
             }
         }
-        korzinaGoods=korzinaitems
-        console.log(korzinaitems)
+
+        korzinaGoods=basketitems
+        console.log(basketitems)
     }
 
      // show and hide korzina goods
